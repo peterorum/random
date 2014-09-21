@@ -1,13 +1,19 @@
 {
-    "author": "Peter Orum",
-    "name": "random",
-    "version": "0.1.1",
-    "description": "Displays a random word",
-    "main": "random",
-    "dependencies":
-    {},
-    "engines":
-    {
-        "node": "*"
-    }
+  "author": "Peter Orum",
+  "name": "random",
+  "version": "0.1.1",
+  "description": "Displays a random word",
+  "main": "random",
+  "dependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-http-server": "^1.0.0",
+    "grunt-protractor-runner": "^1.1.4",
+    "grunt-protractor-webdriver": "^0.1.8",
+    "protractor": "^1.2.0"
+  }
 }
