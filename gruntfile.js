@@ -69,12 +69,7 @@ module.exports = function( grunt )
         {
             configFiles:
             {
-                // realod grunt when this gruntfile changes
-                files: [ 'gruntfile.js' ],
-                options:
-                {
-                    reload: true
-                }
+                files: [ 'gruntfile.js' ]
             },
             scripts:
             {
