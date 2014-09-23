@@ -5,6 +5,5 @@ describe( 'angularjs homepage todo list', function()
         browser.get( 'index.html' );
 
         expect(browser.getTitle()).toEqual('Random');
-
     } );
 } );
