@@ -1,6 +1,6 @@
 var random = function()
 {
-    return "fish";
+    return 'fish';
 };
 
 console.log(random());

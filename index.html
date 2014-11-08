@@ -1,18 +1,23 @@
 <html>
-    <head><title>Random</title></head>
-    <body ng-app='randomApp'>
-        <div ng-controller="mainController">
-            {{text}}
-        </div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+<head>
+    <title>Random</title>
+</head>
 
-        <script>
-                angular.module('randomApp', []);
-                angular.module('randomApp').controller('mainController', ["$scope", function($scope)
-                    {
-                        $scope.text = 'fish';
-                    }]);
-        </script>
-    </body>
+<body ng-app='randomApp'>
+    <div ng-controller="mainController">
+        {{text}}
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+
+    <script>
+
+    angular.module('randomApp', []);
+    angular.module('randomApp').controller('mainController', ["$scope", function($scope) {
+        $scope.text = 'fish';
+    }]);
+    </script>
+</body>
+
 </html>

@@ -1,38 +1,24 @@
-module.exports = function( grunt )
-{
-    grunt.initConfig(
-    {
-        protractor_webdriver:
-        {
-            options:
-            {
-                // leave the webdriver open between tests
-                keepAlive: true
-
-            },
-            test:
-            {}
+module.exports = function(grunt) {
+    grunt.initConfig({
+        phantom: {
+            options: {
+                port: 4444
+            }
         },
 
-        protractor:
-        {
-            options:
-            {
+        protractor: {
+            options: {
                 // default node config file
                 configFile: "node_modules/protractor/referenceConf.js",
                 keepAlive: true,
                 noColor: false,
-                args:
-                {}
+                args: {}
             },
-            test:
-            {
-                options:
-                {
+            test: {
+                options: {
                     // our local config file
                     configFile: "protractor-conf.js",
-                    args:
-                    {
+                    args: {
                         // the port & path (if any) of the web server being used
                         baseUrl: "http://localhost:8080"
                     }
@@ -40,11 +26,9 @@ module.exports = function( grunt )
             },
         },
 
-        'http-server':
-        {
-            'test':
-            {
-                // run form the current folder
+        'http-server': {
+            'test': {
+                // run from the current folder
                 root: './',
 
                 // port to usr
@@ -65,34 +49,29 @@ module.exports = function( grunt )
 
         },
 
-        watch:
-        {
-            configFiles:
-            {
-                files: [ 'gruntfile.js' ]
+        watch: {
+            configFiles: {
+                files: ['Gruntfile.js']
             },
-            scripts:
-            {
+            scripts: {
                 // execute when our js or html changes
-                files: [ '**/*spec.js', '**/*.html' ],
+                files: ['**/*spec.js', '**/*.html'],
                 // run the protractor test task
-                tasks: [ 'protractor:test' ],
-                options:
-                {
+                tasks: ['phantom', 'protractor:test'],
+                options: {
                     spawn: false,
                     debounceDelay: 250,
                 },
             },
         },
 
-    } );
+    });
 
-    grunt.loadNpmTasks( 'grunt-http-server' );
-    grunt.loadNpmTasks( 'grunt-protractor-webdriver' );
-    grunt.loadNpmTasks( 'grunt-protractor-runner' );
-    grunt.loadNpmTasks( 'grunt-contrib-watch' );
+    grunt.loadNpmTasks('grunt-http-server');
+    grunt.loadNpmTasks('grunt-phantom');
+    grunt.loadNpmTasks('grunt-protractor-runner');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
-    // start the web server and selenium server when grunt starts so they are always running for the test
-    grunt.task.run( 'http-server:test' );
-    grunt.task.run( 'protractor_webdriver:test' );
+    // start the web server when grunt starts so it's always running for the test
+    grunt.task.run('http-server:test');
 };
