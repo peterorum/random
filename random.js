@@ -1,6 +1,12 @@
-var random = function()
+( function ()
 {
-    return 'fish';
-};
+    "use strict";
 
-console.log(random());
+    var random = function ()
+    {
+        return 'fish';
+    };
+
+    console.log( random() );
+
+}() );
