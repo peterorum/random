@@ -1,7 +1,7 @@
 exports.config = {
     seleniumAddress: 'http://localhost:4444',
     baseUrl: 'http://localhost:8080/',
-    specs: [ '*spec.js' ],
+    specs: ['tests/*-spec.js'],
     capabilities:
     {
         browserName: 'phantomjs',

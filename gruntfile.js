@@ -1,33 +1,46 @@
-module.exports = function(grunt) {
-    grunt.initConfig({
-        phantom: {
-            options: {
+module.exports = function (grunt)
+{
+    grunt.initConfig(
+    {
+        phantom:
+        {
+            options:
+            {
                 port: 4444
-            }
+            },
+            test: {}
         },
 
-        protractor: {
-            options: {
+        protractor:
+        {
+            options:
+            {
                 // default node config file
-                configFile: "node_modules/protractor/referenceConf.js",
+                configFile: 'node_modules/protractor/referenceConf.js',
                 keepAlive: true,
                 noColor: false,
-                args: {}
+                args:
+                {}
             },
-            test: {
-                options: {
+            test:
+            {
+                options:
+                {
                     // our local config file
-                    configFile: "protractor-conf.js",
-                    args: {
+                    configFile: 'protractor-conf.js',
+                    args:
+                    {
                         // the port & path (if any) of the web server being used
-                        baseUrl: "http://localhost:8080"
+                        baseUrl: 'http://localhost:8080'
                     }
                 }
             },
         },
 
-        'http-server': {
-            'test': {
+        'http-server':
+        {
+            'test':
+            {
                 // run from the current folder
                 root: './',
 
@@ -35,30 +48,34 @@ module.exports = function(grunt) {
                 port: 8080,
 
                 // local host
-                host: "127.0.0.1",
+                host: '127.0.0.1',
 
                 // disable cahcing
                 cache: -1,
                 showDir: true,
                 autoIndex: true,
 
-                ext: "html",
+                ext: 'html',
 
                 runInBackground: true
             }
 
         },
 
-        watch: {
-            configFiles: {
+        watch:
+        {
+            configFiles:
+            {
                 files: ['Gruntfile.js']
             },
-            scripts: {
+            scripts:
+            {
                 // execute when our js or html changes
-                files: ['**/*spec.js', '**/*.html'],
+                files: ['tests/*-spec.js', '*.html', 'app/*.js', 'controllers/*.js'],
                 // run the protractor test task
-                tasks: ['phantom', 'protractor:test'],
-                options: {
+                tasks: ['protractor:test'],
+                options:
+                {
                     spawn: false,
                     debounceDelay: 250,
                 },
@@ -74,4 +91,5 @@ module.exports = function(grunt) {
 
     // start the web server when grunt starts so it's always running for the test
     grunt.task.run('http-server:test');
+    grunt.task.run('phantom:test');
 };
