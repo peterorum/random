@@ -2,21 +2,40 @@
 {
     "use strict";
 
-    // osx dictionary
-    var dict = "/usr/share/dict/words";
-
     var fs = require( 'fs' );
+    var _ = require( 'lodash' );
 
-    var writeWord = function (word)
+    // osx dictionary (too many weird words)
+    // var dict = "/usr/share/dict/words";
+
+    // based on 2of12.txt & neol2007.txt from http://wordlist.aspell.net/12dicts
+    // for further copyright, see agid.txt
+
+    var dict = "words.txt";
+
+    var readWords = function ( callback )
     {
-        fs.open( 'words.txt', 'a', function ( err, fd )
+        fs.readFile( dict,
         {
-            fs.write( fd, word + '\n', null, null, function ( err )
-            {
-                fs.close( fd );
-            } );
+            encoding: 'utf8',
+            flag: 'r'
+        }, function ( err, data )
+        {
+            var words = data.split( /\n/ );
+
+            callback( words );
         } );
     };
 
-    writeWord('fish');
+    var chooseWords = function ( words )
+    {
+        var count = words.length;
+
+        var r = Math.floor( Math.random() * count );
+
+        console.log( words[ r ] );
+    };
+
+    readWords( chooseWords );
+
 }() );

@@ -26,3 +26,5 @@ node_modules
 
 # sublime project
 *.sublime-*
+
+common-words.txt
