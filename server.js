@@ -25,5 +25,5 @@
 
             response.end('</body></html>');
 
-        } ).listen( 8080 );
+        } ).listen( 80 );
     }() );
