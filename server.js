@@ -1,33 +1,29 @@
 (
+    // serve up dynamic content
+
     function ()
     {
+        // this code returns a web page with a word, ignoring the path
+
         "use strict";
 
-        var fs = require( 'fs' );
         var http = require( 'http' );
-        var url = require( 'url' );
-
-        var rootDir = './';
+        var rword = require('./get-word.js');
 
         http.createServer( function ( request, response )
         {
-            var urlObj = url.parse( request.url, true, false );
+            response.setHeader( "Content-Type", "text/html" );
+            response.writeHead( 200 );
+            response.write( '<html><head><title>Random Inspiration</title></head>' );
+            response.write( '<body>' );
 
-            fs.readFile( rootDir + urlObj.pathname, function ( err, data )
-            {
-                if ( err )
-                {
-                    response.writeHead( 404 );
-                    response.end( JSON.stringify( err ) );
-                    return;
-                }
-                else
-                {
-                    response.writeHead(200);
-                    response.end(data);
-                }
-            } );
-        } ).listen(8888);
+            var w = rword.getWord();
 
-    }()
-);
+            response.write( '\n<h1>' );
+            response.write( w );
+            response.write( '</h1>' );
+
+            response.end('</body></html>');
+
+        } ).listen( 80 );
+    }() );
