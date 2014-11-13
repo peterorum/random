@@ -8,9 +8,7 @@
         "use strict";
 
         var http = require( 'http' );
-        var _ = require( 'lodash' );
-
-        var words = [ 'fish', 'milkshake', 'garlic' ];
+        var rword = require('./get-word.js');
 
         http.createServer( function ( request, response )
         {
@@ -19,7 +17,7 @@
             response.write( '<html><head><title>Random Inspiration</title></head>' );
             response.write( '<body>' );
 
-            var w = words[_.random(words.length - 1)];
+            var w = rword.getWord();
 
             response.write( '\n<h1>' );
             response.write( w );

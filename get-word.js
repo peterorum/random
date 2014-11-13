@@ -7,9 +7,13 @@
     // based on 2of12.txt & neol2007.txt from http://wordlist.aspell.net/12dicts
     // for further copyright, see agid.txt
 
-    var dict = "words.txt";
+    var dict = "./words.txt";
 
-    var readWords = function ( callback )
+    // dummy init
+    var words = [ 'fish' ];
+
+    // load all words
+    var readWords = function ()
     {
         fs.readFile( dict,
         {
@@ -17,21 +21,22 @@
             flag: 'r'
         }, function ( err, data )
         {
-            var words = data.split( /\n/ );
-
-            callback( words );
+            words = data.split( /\n/ );
         } );
     };
 
-    var chooseWord = function ( words )
+    // init loading of the words
+    readWords();
+
+    //--------- exports
+
+    exports.getWord = function ()
     {
         var count = words.length;
 
         var r = Math.floor( Math.random() * count );
 
-        console.log( words[ r ] );
+        return ( words[ r ] );
     };
-
-    readWords( chooseWord );
 
 }() );
