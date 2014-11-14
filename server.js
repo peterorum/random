@@ -8,22 +8,61 @@
         "use strict";
 
         var http = require( 'http' );
-        var rword = require('./get-word.js');
+        var rword = require( './get-word.js' );
 
         http.createServer( function ( request, response )
         {
+            var word = rword.getWord();
+
             response.setHeader( "Content-Type", "text/html" );
             response.writeHead( 200 );
-            response.write( '<html><head><title>Random Inspiration</title></head>' );
-            response.write( '<body>' );
+            response.write( '<html>\n' );
+            response.write( '<head>\n' );
+            response.write( '<title>Random Inspiration2</title>\n' );
+            response.write( '<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />\n' );
+            response.write( '<body>\n' );
 
-            var w = rword.getWord();
+            // start container
+            response.write( '<div class="container">\n' );
 
-            response.write( '\n<h1>' );
-            response.write( w );
-            response.write( '</h1>' );
+            // heading
+            response.write( '<div class="row">\n' );
+            response.write( '<div class="col-xs-12">\n' );
 
-            response.end('</body></html>');
+            response.write( '<h1 class="text-center">Random Inspiration</h1>' );
+
+            response.write( '</div>\n' );
+            response.write( '</div>\n' );
+
+            // content
+            response.write( '<div class="row">\n' );
+            response.write( '<div class="col-xs-12">\n' );
+
+            response.write( '<h2 class="text-center">' );
+            response.write( word );
+            response.write( '</h2>\n' );
+
+            response.write( '</div>\n' );
+            response.write( '</div>\n' );
+
+            // button
+            response.write( '<div class="row">\n' );
+            response.write( '<div class="col-xs-12 text-center">\n' );
+
+            response.write( '<div class="btn btn-primary" onclick="location.reload();">' );
+            response.write( 'again' );
+            response.write( '</div>\n' );
+
+            response.write( '</div>\n' );
+            response.write( '</div>\n' );
+
+            // end container
+            response.write( '</div>\n' );
+
+            response.write( '</body>\n' );
+
+            // end
+            response.end( '</html>\n' );
 
         } ).listen( process.env.PORT || 8888 );
     }() );
