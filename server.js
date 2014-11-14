@@ -18,7 +18,7 @@
             response.writeHead( 200 );
             response.write( '<html>\n' );
             response.write( '<head>\n' );
-            response.write( '<title>Random Inspiration2</title>\n' );
+            response.write( '<title>Random Inspiration</title>\n' );
             response.write( '<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />\n' );
             response.write( '<body>\n' );
 
