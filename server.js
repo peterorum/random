@@ -8,6 +8,10 @@
         "use strict";
 
         var http = require( 'http' );
+
+        var _ = require( 'lodash' );
+        _.templateSettings.interpolate = /{{([\s\S]+?)}}/g; // angular format
+
         var rword = require( './get-word.js' );
 
         http.createServer( function ( request, response )
@@ -39,7 +43,10 @@
             response.write( '<div class="col-xs-12">\n' );
 
             response.write( '<h2 class="text-center">' );
-            response.write( word );
+            response.write( _.template( '<a href="http://www.thefreedictionary.com/{{ word }}" target="_blank">{{ word }}</a>',
+            {
+                word: word
+            } ) );
             response.write( '</h2>\n' );
 
             response.write( '</div>\n' );
