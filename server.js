@@ -7,14 +7,20 @@
 
         "use strict";
 
-        var http = require( 'http' );
+        var https = require( 'https' );
+        var fs = require( 'fs' );
 
         // var _ = require( 'lodash' );
         // _.templateSettings.interpolate = /{{([\s\S]+?)}}/g; // angular format
 
         var rword = require( './get-word.js' );
 
-        http.createServer( function ( request, response )
+        var options = {
+            key: fs.readFileSync('./server.pem'),
+            cert: fs.readFileSync('./server.crt')
+        };
+
+        https.createServer( options, function ( request, response )
         {
             var word = rword.getWord();
 
