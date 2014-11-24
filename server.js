@@ -7,20 +7,23 @@
 
         "use strict";
 
-        var https = require( 'https' );
+        var http = require( 'http' );
         var fs = require( 'fs' );
 
         // var _ = require( 'lodash' );
         // _.templateSettings.interpolate = /{{([\s\S]+?)}}/g; // angular format
 
+        // unused - self-signed ssl didn't load at all
+        // var https = require( 'https' );
+        // var options = {
+        //     key: fs.readFileSync('./server.pem'),
+        //     cert: fs.readFileSync('./server.crt')
+        // };
+        // https.createServer( options, function ( request, response )
+
         var rword = require( './get-word.js' );
 
-        var options = {
-            key: fs.readFileSync('./server.pem'),
-            cert: fs.readFileSync('./server.crt')
-        };
-
-        https.createServer( options, function ( request, response )
+        http.createServer( function ( request, response )
         {
             var word = rword.getWord();
 
