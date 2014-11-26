@@ -13,15 +13,8 @@
         // var _ = require( 'lodash' );
         // _.templateSettings.interpolate = /{{([\s\S]+?)}}/g; // angular format
 
-        // unused - self-signed ssl didn't load at all
-        // var https = require( 'https' );
-        // var options = {
-        //     key: fs.readFileSync('./server.pem'),
-        //     cert: fs.readFileSync('./server.crt')
-        // };
-        // https.createServer( options, function ( request, response )
-
         var rword = require( './get-word.js' );
+        var config = require( './process.js' );
 
         http.createServer( function ( request, response )
         {
@@ -76,6 +69,12 @@
 
             // end container
             response.write( '</div>\n' );
+
+            //--------------------- config
+
+            response.write( '<pre>\n' );
+            response.write(JSON.stringify(config.getConfig(), null, 4));
+            response.write( '</pre>\n' );
 
             response.write( '</body>\n' );
 
