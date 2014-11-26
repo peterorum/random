@@ -24,7 +24,7 @@
             config.platform = process.platform;
             config.architecture = process.arch;
             config.memoryUsage = util.inspect(process.memoryUsage());
-            config.nodeUptime = process.uptime;
+            config.nodeUptime = process.uptime();
 
             return config;
         };
