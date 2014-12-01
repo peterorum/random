@@ -50,10 +50,10 @@
                 response.write('<div class="col-xs-12">\n');
 
                 response.write('<h2 class="text-center">');
-                // response.write( _.template( '<a href="http://www.thefreedictionary.com/{{ word }}" target="_blank">{{ word }}</a>',
-                // {
-                //     word: word
-                // } ) );
+                response.write( _.template( '<a href="http://www.thefreedictionary.com/{{ word }}" target="_blank">{{ word }}</a>',
+                {
+                    word: word
+                } ) );
 
                 response.write(word);
                 response.write('</h2>\n');
