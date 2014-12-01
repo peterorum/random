@@ -11,8 +11,8 @@
         var url = require('url');
         var fs = require('fs');
 
-        // var _ = require( 'lodash' );
-        // _.templateSettings.interpolate = /{{([\s\S]+?)}}/g; // angular format
+        var _ = require( 'lodash' );
+        _.templateSettings.interpolate = /{{([\s\S]+?)}}/g; // angular format
 
         var rword = require('./get-word.js');
         var config = require('./process.js');
