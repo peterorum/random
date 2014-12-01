@@ -55,7 +55,6 @@
                     word: word
                 } ) );
 
-                response.write(word);
                 response.write('</h2>\n');
 
                 response.write('</div>\n');
