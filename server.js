@@ -66,6 +66,7 @@
 
                 response.write('<div class="btn btn-primary" onclick="location.reload();">');
                 response.write('again');
+
                 response.write('</div>\n');
 
                 response.write('</div>\n');

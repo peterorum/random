@@ -1,4 +1,4 @@
-module.exports = function (grunt)
+module.exports = function(grunt)
 {
     grunt.initConfig(
     {
@@ -8,9 +8,21 @@ module.exports = function (grunt)
             {
                 port: 4444
             },
-            test: {}
+            test:
+            {}
         },
 
+        // nodemon
+        nodemon:
+        {
+            dev:
+            {
+                script: 'server.js',
+                watch: '.'
+            }
+        },
+
+        // protracctor
         protractor:
         {
             options:
@@ -66,7 +78,7 @@ module.exports = function (grunt)
         {
             configFiles:
             {
-                files: ['Gruntfile.js']
+                files: ['gruntfile.js']
             },
             scripts:
             {
@@ -82,14 +94,26 @@ module.exports = function (grunt)
             },
         },
 
+        // run watch and nodemon at the same time
+        // start the web server when grunt starts so it's always running for the test
+        concurrent:
+        {
+            options:
+            {
+                logConcurrentOutput: true
+            },
+            tasks: ['nodemon:dev', 'watch', 'http-server:test', 'phantom:test']
+        }
+
     });
 
+    grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-http-server');
     grunt.loadNpmTasks('grunt-phantom');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-nodemon');
 
-    // start the web server when grunt starts so it's always running for the test
-    grunt.task.run('http-server:test');
-    grunt.task.run('phantom:test');
+
+    grunt.registerTask('default', ['concurrent']);
 };
