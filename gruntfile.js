@@ -12,17 +12,7 @@ module.exports = function(grunt)
             {}
         },
 
-        // nodemon
-        nodemon:
-        {
-            dev:
-            {
-                script: 'server.js',
-                watch: '.'
-            }
-        },
-
-        // protracctor
+        // protractor
         protractor:
         {
             options:
@@ -39,39 +29,9 @@ module.exports = function(grunt)
                 options:
                 {
                     // our local config file
-                    configFile: 'protractor-conf.js',
-                    args:
-                    {
-                        // the port & path (if any) of the web server being used
-                        baseUrl: 'http://localhost:8080'
-                    }
+                    configFile: 'protractor-conf.js'
                 }
             },
-        },
-
-        'http-server':
-        {
-            'test':
-            {
-                // run from the current folder
-                root: './',
-
-                // port to usr
-                port: 8080,
-
-                // local host
-                host: '127.0.0.1',
-
-                // disable cahcing
-                cache: -1,
-                showDir: true,
-                autoIndex: true,
-
-                ext: 'html',
-
-                runInBackground: true
-            }
-
         },
 
         watch:
@@ -82,8 +42,8 @@ module.exports = function(grunt)
             },
             scripts:
             {
-                // execute when our js or html changes
-                files: ['tests/*-spec.js', '*.html', 'app/*.js', 'controllers/*.js'],
+                // execute when our js changes
+                files: ['tests/*-spec.js', '*.js', 'app/*.js', 'controllers/*.js'],
                 // run the protractor test task
                 tasks: ['protractor:test'],
                 options:
@@ -92,28 +52,14 @@ module.exports = function(grunt)
                     debounceDelay: 250,
                 },
             },
-        },
-
-        // run watch and nodemon at the same time
-        // start the web server when grunt starts so it's always running for the test
-        concurrent:
-        {
-            options:
-            {
-                logConcurrentOutput: true
-            },
-            tasks: ['nodemon:dev', 'watch', 'http-server:test', 'phantom:test']
         }
 
     });
 
-    grunt.loadNpmTasks('grunt-concurrent');
-    grunt.loadNpmTasks('grunt-http-server');
     grunt.loadNpmTasks('grunt-phantom');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-nodemon');
 
+    grunt.task.run('phantom:test');
 
-    grunt.registerTask('default', ['concurrent']);
 };

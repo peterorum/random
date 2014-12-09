@@ -1,9 +1,9 @@
-describe( 'angularjs homepage todo list', function ()
+describe( 'Random project', function ()
 {
-    it( 'should work', function ()
+    it( 'should have a title', function ()
     {
-        browser.get( 'index.html' );
+        browser.get( '' );
 
-        expect( browser.getTitle() ).toEqual( 'Random' );
+        expect( browser.getTitle() ).toEqual( 'Random Inspiration' );
     } );
 } );

@@ -9,9 +9,10 @@
 
         var http = require('http');
         var url = require('url');
+        var path = require('path');
         var fs = require('fs');
 
-        var _ = require( 'lodash' );
+        var _ = require('lodash');
         _.templateSettings.interpolate = /{{([\s\S]+?)}}/g; // angular format
 
         var rword = require('./get-word.js');
@@ -19,75 +20,95 @@
 
         http.createServer(function(request, response)
         {
-            var urlObj = url.parse(request.url, true, false);
+            var uri = url.parse(request.url, true, false).pathname;
+            var filename = path.join(process.cwd(), uri);
 
-            response.setHeader("Content-Type", "text/html");
-            response.writeHead(200);
-            response.write('<html>\n');
-            response.write('<head>\n');
-            response.write('<title>Random Inspiration</title>\n');
-            response.write('<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />\n');
-            response.write('<body>\n');
-
-            if (urlObj.pathname === '/')
+            if (/\.js$/.test(filename))
             {
-                var word = rword.getWord();
+                // js
 
-                // start container
-                response.write('<div class="container">\n');
-
-                // heading
-                response.write('<div class="row">\n');
-                response.write('<div class="col-xs-12">\n');
-
-                response.write('<h1 class="text-center">Random Inspiration</h1>');
-
-                response.write('</div>\n');
-                response.write('</div>\n');
-
-                // content
-                response.write('<div class="row">\n');
-                response.write('<div class="col-xs-12">\n');
-
-                response.write('<h2 class="text-center">');
-                response.write( _.template( '<a href="http://www.thefreedictionary.com/{{ word }}" target="_blank">{{ word }}</a>',
+                fs.readFile(filename, "binary", function(err, file)
                 {
-                    word: word
-                } ) );
-
-                response.write('</h2>\n');
-
-                response.write('</div>\n');
-                response.write('</div>\n');
-
-                // button
-                response.write('<div class="row">\n');
-                response.write('<div class="col-xs-12 text-center">\n');
-
-                response.write('<div class="btn btn-primary" onclick="location.reload();">');
-                response.write('again');
-
-                response.write('</div>\n');
-
-                response.write('</div>\n');
-                response.write('</div>\n');
-
-                // end container
-                response.write('</div>\n');
+                    response.setHeader("Content-Type", "application/javascript");
+                    response.writeHead(200);
+                    response.write(file, "binary");
+                    response.end();
+                });
             }
-            else if (urlObj.pathname === '/config')
+            else
             {
-                //--------------------- config
+                // html
 
-                response.write('<pre>\n');
-                response.write(JSON.stringify(config.getConfig(), null, 4));
-                response.write('</pre>\n');
+                response.setHeader("Content-Type", "text/html");
+                response.writeHead(200);
+                response.write('<html>\n');
+                response.write('<head>\n');
+                response.write('<title>Random Inspiration</title>\n');
+                response.write('<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />\n');
+                response.write('<body ng-app="randomApp">\n');
+
+                if (uri.pathname === '/config')
+                {
+                    //--------------------- config
+
+                    response.write('<pre>\n');
+                    response.write(JSON.stringify(config.getConfig(), null, 4));
+                    response.write('</pre>\n');
+                }
+                else if (uri === '/')
+                {
+                    var word = rword.getWord();
+
+                    // start container
+                    response.write('<div class="container">\n');
+
+                    // heading
+                    response.write('<div class="row">\n');
+                    response.write('<div class="col-xs-12">\n');
+
+                    response.write('<h1 class="text-center">Random Inspiration</h1>');
+
+                    response.write('</div>\n');
+                    response.write('</div>\n');
+
+                    // content
+                    response.write('<div class="row">\n');
+                    response.write('<div class="col-xs-12">\n');
+
+                    response.write('<h2 class="text-center">');
+                    response.write(_.template('<a href="http://www.thefreedictionary.com/{{ word }}" target="_blank">{{ word }}</a>',
+                    {
+                        word: word
+                    }));
+
+                    response.write('</h2>\n');
+
+                    response.write('</div>\n');
+                    response.write('</div>\n');
+
+                    // button
+                    response.write('<div class="row">\n');
+                    response.write('<div class="col-xs-12 text-center">\n');
+
+                    response.write('<div class="btn btn-primary" onclick="location.reload();">');
+                    response.write('again');
+
+                    response.write('</div>\n');
+
+                    response.write('</div>\n');
+                    response.write('</div>\n');
+
+                    // end container
+                    response.write('</div>\n');
+                }
+
+                response.write('<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>\n');
+                response.write('<script src="app/app.js"></script>\n');
+
+                response.write('</body>\n');
+
+                // end
+                response.end('</html>\n');
             }
-
-            response.write('</body>\n');
-
-            // end
-            response.end('</html>\n');
-
         }).listen(process.env.PORT || 8888);
     }());
