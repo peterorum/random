@@ -72,7 +72,7 @@
                 // body
                 response.write('<body ng-app="randomApp" ng-hint>\n');
 
-                if (uri.pathname === '/config')
+                if (uri === '/config')
                 {
                     //--------------------- config
 
