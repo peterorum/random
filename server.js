@@ -128,7 +128,7 @@
                 }
 
                 response.write('<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>\n');
-                response.write('<script src="node_modules/angular-hint/dist/hintxx.js"></script>\n');
+                response.write('<script src="node_modules/angular-hint/dist/hint.js"></script>\n');
                 response.write('<script src="app/app.js"></script>\n');
 
                 response.write('</body>\n');
