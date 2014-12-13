@@ -18,6 +18,17 @@
         var rword = require('./get-word.js');
         var config = require('./process.js');
 
+        var handleErr = function(errNo, err)
+        {
+            response.writeHead(errNo,
+            {
+                "Content-Type": "text/plain"
+            });
+            response.write(errNo + " " + err + "\n");
+            response.end();
+            return;
+        };
+
         http.createServer(function(request, response)
         {
             var uri = url.parse(request.url, true, false).pathname;
@@ -29,10 +40,17 @@
 
                 fs.readFile(filename, "binary", function(err, file)
                 {
-                    response.setHeader("Content-Type", "application/javascript");
-                    response.writeHead(200);
-                    response.write(file, "binary");
-                    response.end();
+                    if (err)
+                    {
+                        handleError(404, "Not found " + err);
+                    }
+                    else
+                    {
+                        response.setHeader("Content-Type", "application/javascript");
+                        response.writeHead(200);
+                        response.write(file, "binary");
+                        response.end();
+                    }
                 });
             }
             else
