@@ -18,21 +18,22 @@
         var rword = require('./get-word.js');
         var config = require('./process.js');
 
-        var handleError = function(errNo, err)
-        {
-            response.writeHead(errNo,
-            {
-                "Content-Type": "text/plain"
-            });
-            response.write(errNo + " " + err + "\n");
-            response.end();
-            return;
-        };
 
         http.createServer(function(request, response)
         {
             var uri = url.parse(request.url, true, false).pathname;
             var filename = path.join(process.cwd(), uri);
+
+            var handleError = function(errNo, err)
+            {
+                response.writeHead(errNo,
+                {
+                    "Content-Type": "text/plain"
+                });
+                response.write(errNo + " " + err + "\n");
+                response.end();
+                return;
+            };
 
             if (/\.js$/.test(filename))
             {
@@ -127,7 +128,7 @@
                 }
 
                 response.write('<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>\n');
-                response.write('<script src="node_modules/angular-hint/dist/hint.js"></script>\n');
+                response.write('<script src="node_modules/angular-hint/dist/hintxx.js"></script>\n');
                 response.write('<script src="app/app.js"></script>\n');
 
                 response.write('</body>\n');
