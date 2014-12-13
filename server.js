@@ -18,7 +18,7 @@
         var rword = require('./get-word.js');
         var config = require('./process.js');
 
-        var handleErr = function(errNo, err)
+        var handleError = function(errNo, err)
         {
             response.writeHead(errNo,
             {
