@@ -19,7 +19,7 @@ module.exports = function(grunt)
             {
                 // default node config file
                 configFile: 'node_modules/protractor/referenceConf.js',
-                keepAlive: true,
+                keepAlive: false, // set to false so it shows a growl notification on failure
                 noColor: false,
                 args:
                 {}
@@ -52,6 +52,28 @@ module.exports = function(grunt)
                     debounceDelay: 250,
                 },
             },
+        },
+
+        notify:
+        {
+            test:
+            {
+                options:
+                {
+                    message: "Test done"
+                }
+            }
+        },
+
+        notify_hooks:
+        {
+            options:
+            {
+                enabled: true,
+                max_jshint_notifications: 5, // maximum number of notifications from jshint output
+                success: false, // whether successful grunt executions should be notified automatically
+                duration: 3 // the duration of notification in seconds, for `notify-send only
+            }
         }
 
     });
@@ -59,7 +81,9 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-phantom');
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-notify');
 
     grunt.task.run('phantom:test');
+    grunt.task.run('notify_hooks');
 
 };
