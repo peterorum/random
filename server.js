@@ -16,8 +16,8 @@
         _.templateSettings.interpolate = /{{([\s\S]+?)}}/g; // angular format
 
         var rword = require('./get-word.js');
-        var config = require('./process.js');
 
+        var config = require('./process.js');
 
         http.createServer(function(request, response)
         {
@@ -128,7 +128,10 @@
                 }
 
                 response.write('<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>\n');
+
+                // only hosted locally
                 response.write('<script src="node_modules/angular-hint/dist/hint.js"></script>\n');
+
                 response.write('<script src="app/app.js"></script>\n');
 
                 response.write('</body>\n');

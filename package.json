@@ -5,7 +5,7 @@
   "description": "Displays a random word",
   "main": "server",
   "dependencies": {
-    "lodash": "*"
+    "lodash": "^2.4.1"
   },
   "engines": {
     "node": "*"

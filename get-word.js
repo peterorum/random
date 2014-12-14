@@ -1,3 +1,5 @@
+// @flow weak
+
 ( function ()
 {
     "use strict";
@@ -21,7 +23,7 @@
             flag: 'r'
         }, function ( err, data )
         {
-            words = data.split( /\n/ );
+            words = data.split( /\r?\n/ );
         } );
     };
 
