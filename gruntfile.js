@@ -45,24 +45,13 @@ module.exports = function(grunt)
                 // execute when our js changes
                 files: ['tests/*-spec.js', '*.js', 'app/*.js', 'controllers/*.js'],
                 // run the protractor test task
-                tasks: ['protractor:test'],
+                tasks: ['jshint:test', 'protractor:test'],
                 options:
                 {
                     spawn: false,
                     debounceDelay: 250,
                 },
             },
-        },
-
-        notify:
-        {
-            test:
-            {
-                options:
-                {
-                    message: "Test done"
-                }
-            }
         },
 
         notify_hooks:
@@ -74,6 +63,11 @@ module.exports = function(grunt)
                 success: false, // whether successful grunt executions should be notified automatically
                 duration: 3 // the duration of notification in seconds, for `notify-send only
             }
+        },
+
+        jshint:
+        {
+            test: ['gruntfile.js', './*.js', 'tests/**/*.js']
         }
 
     });
@@ -82,6 +76,7 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-protractor-runner');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.task.run('phantom:test');
     grunt.task.run('notify_hooks');
