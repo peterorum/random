@@ -1,3 +1,5 @@
+// jshint ignore : start
+
 module.exports = function(grunt)
 {
     grunt.initConfig(
@@ -67,7 +69,7 @@ module.exports = function(grunt)
 
         jshint:
         {
-            test: ['gruntfile.js', './*.js', 'tests/**/*.js']
+            test: ['./*.js', 'tests/**/*.js']
         }
 
     });

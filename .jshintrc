@@ -4,6 +4,7 @@
     "curly": true,
     "eqeqeq": true,
     "indent": 4,
+    "jasmine": true,
     "latedef": true,
     "maxcomplexity": 5,
     "maxdepth": 3,
@@ -12,5 +13,7 @@
     "node": true,
     "strict": true,
     "undef": true,
-    "unused": true
+    "unused": true,
+
+    "predef": ["browser", "element", "by"]
 }

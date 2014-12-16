@@ -1,16 +1,30 @@
-describe('Random project', function()
+(function()
 {
-    it('should have a title', function()
+    "use strict";
+
+    var RandomPage = function()
     {
-        browser.get('/');
 
-        expect(browser.getTitle()).toEqual('Random Inspiration');
-    });
+        this.get = function()
+        {
+            browser.get('/');
+        };
 
-    it('should have config', function()
+        this.getTitle = function()
+        {
+            return browser.getTitle();
+        };
+    };
+
+    describe('Random project', function()
     {
-        browser.get('/config');
+        it('should have a title', function()
+        {
+            var randomPage = new RandomPage();
+            randomPage.get();
 
-        expect(element(by.css('pre')).getText()).toMatch(/currentDirectory/);
+            expect(randomPage.getTitle()).toEqual('Random Inspiration');
+        });
+
     });
-});
+})();
