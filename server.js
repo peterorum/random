@@ -21,8 +21,8 @@
 
         http.createServer(function(request, response)
         {
-            var uri = url.parse(request.url, true, false).pathname;
-            var filename = path.join(process.cwd(), uri);
+            var uri = url.parse(request.url, true, false);
+            var filename = path.join(process.cwd(), uri.pathname);
 
             var handleError = function(errNo, err)
             {
@@ -72,7 +72,7 @@
                 // body
                 response.write('<body ng-app="randomApp" ng-hint>\n');
 
-                if (uri === '/config')
+                if (uri.pathname === '/config')
                 {
                     //--------------------- config
 
@@ -80,9 +80,10 @@
                     response.write(JSON.stringify(config.getConfig(), null, 4));
                     response.write('</pre>\n');
                 }
-                else if (uri === '/')
+                else if (uri.pathname === '/')
                 {
-                    var word = rword.getWord();
+                    // can override word using ?word=fish
+                    var word = uri.query.word || rword.getWord();
 
                     // start container
                     response.write('<div class="container">\n');
