@@ -3,34 +3,38 @@
     "use strict";
 
     var fs = require('fs');
+    var crypto = require('crypto');
 
     var writeScreenShot = function(data, filename)
     {
-        var stream = fs.createWriteStream(filename);
+        fs.writeFileSync(filename, new Buffer(data, 'base64'));
+    };
 
-        stream.write(new Buffer(data, 'base64'));
-        stream.end();
+    var md5 = function(data)
+    {
+        return crypto
+            .createHash('md5')
+            .update(data, 'utf8')
+            .digest('hex');
+    };
+
+    var calcFileMd5 = function(fileName)
+    {
+        var data = fs.readFileSync(fileName);
+
+        return md5(data);
     };
 
     var RandomPage = function()
     {
-        this.get = function()
+        this.get = function(url)
         {
-            browser.get('/');
+            browser.get(url || '/');
         };
 
         this.getTitle = function()
         {
             return browser.getTitle();
-        };
-
-        this.saveScreenshot = function()
-        {
-            browser.takeScreenshot().then(function(png)
-            {
-                writeScreenShot(png, 'tests/random.png');
-            });
-
         };
     };
 
@@ -45,11 +49,24 @@
 
         });
 
-        it('should take a screenshot', function()
+        it('should match screenshot', function()
         {
+            var md5Expected = calcFileMd5("tests/random-expected.png");
+
             var randomPage = new RandomPage();
 
-            randomPage.saveScreenshot();
+            randomPage.get('/?word=fish');
+
+            browser.takeScreenshot().then(function(png)
+            {
+                var filename = 'tests/random-actual.png';
+
+                writeScreenShot(png, filename);
+
+                var md5Actual = calcFileMd5(filename);
+
+                expect(md5Actual).toEqual(md5Expected);
+            });
         });
     });
 })();
