@@ -2,6 +2,8 @@
 {
     "use strict";
 
+    // use with webdriver-manager start
+
     var RandomPage = function()
     {
         this.get = function(url)

@@ -82,5 +82,4 @@ module.exports = function(grunt)
 
     grunt.task.run('phantom:test');
     grunt.task.run('notify_hooks');
-
 };
