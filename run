@@ -1,4 +1,0 @@
-nodemon server.js -w server.js
-
-# alternatively using the heroku runner
-#foreman start web

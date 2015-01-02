@@ -1,0 +1,4 @@
+nodemon server.js  --verbose --delay 3 --watch server.js  --watch get-word.js  --watch ci-string.js --watch tests --watch app --watch controllers --watch index.html --watch process.js --watch nmon
+
+# alternatively using the heroku runner
+#foreman start web

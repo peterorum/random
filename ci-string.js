@@ -19,7 +19,7 @@
     {
         // format is {{ name }}
 
-        var re = /\{\{\s*(.*?)\s*\}\}/;
+        var re = /\{\{\s*(.+?)\s*\}\}/;
 
         var output = input;
 
@@ -27,12 +27,12 @@
 
         while(result)
         {
-            var len = result[0].length; // lenght of match found
-            var pos = result.index; // where the nmatch is found
+            var len = result[0].length; // length of match found
+            var pos = result.index; // where the match is found
             var name = result[1]; // matched property name
 
             // replace matched string with value of property from data
-            output = exports.left(pos, output) + (data[name] || '') + exports.rest(pos + len, output);
+            output = exports.left(pos, output) + ((name && data[name]) || '') + exports.rest(pos + len, output);
 
             // search again
             result = re.exec(output);
