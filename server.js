@@ -12,8 +12,7 @@
         var path = require('path');
         var fs = require('fs');
 
-        var _ = require('lodash');
-        _.templateSettings.interpolate = /{{([\s\S]+?)}}/g; // angular format
+        var cis = require('./cis');
 
         var rword = require('./get-word.js');
 
@@ -102,10 +101,10 @@
                     response.write('<div class="col-xs-12">\n');
 
                     response.write('<h2 class="text-center">');
-                    response.write(_.template('<a href="http://www.thefreedictionary.com/{{ word }}" target="_blank">{{ word }}</a>',
+                    response.write(cis.template(
                     {
                         word: word
-                    }));
+                    }, '<a href="http://www.thefreedictionary.com/{{ word }}" target="_blank">{{ word }}</a>'));
 
                     response.write('</h2>\n');
 

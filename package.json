@@ -8,7 +8,7 @@
     "lodash": "^2.4.1"
   },
   "engines": {
-    "node": "*"
+    "node": "0.10.x"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
