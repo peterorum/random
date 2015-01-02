@@ -12,10 +12,8 @@
         var path = require('path');
         var fs = require('fs');
 
-        var cis = require('./cis');
-
+        var cis = require('./ci-string');
         var rword = require('./get-word.js');
-
         var config = require('./process.js');
 
         http.createServer(function(request, response)
