@@ -51,7 +51,6 @@
 
     console.log(word);
 
-    mail.send('peter@codeindeed.com', 'peter@peterorum.com', 'Word of the day: ' + word);
-
+    mail.send('peter@codeindeed.com', 'peter@peterorum.com', 'Word of the day: ' + word, word);
 
 }());
