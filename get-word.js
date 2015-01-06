@@ -1,28 +1,26 @@
-( function ()
+(function()
 {
     "use strict";
 
-    var fs = require( 'fs' );
+    var fs = require('fs');
 
-    // based on 2of12.txt & neol2007.txt from http://wordlist.aspell.net/12dicts
-    // for further copyright, see agid.txt
+    // https://scrabblehelper.googlecode.com/svn-history/r20/trunk/ScrabbleHelper/src/dictionaries/sowpods.txt
 
     var dict = "./words.txt";
 
     // dummy init
-    var words = [ 'fish' ];
+    var words = ['fish'];
 
     // load all words
-    var readWords = function ()
+    var readWords = function()
     {
-        fs.readFile( dict,
+        var data = fs.readFileSync(dict,
         {
             encoding: 'utf8',
             flag: 'r'
-        }, function ( err, data )
-        {
-            words = data.split( /\r?\n/ );
-        } );
+        });
+
+        words = data.split(/\r?\n/);
     };
 
     // init loading of the words
@@ -30,13 +28,23 @@
 
     //--------- exports
 
-    exports.getWord = function ()
+    // returns a random word
+
+    exports.getWord = function()
     {
         var count = words.length;
 
-        var r = Math.floor( Math.random() * count );
+        var r = Math.floor(Math.random() * count);
 
-        return ( words[ r ] );
+        return (words[r]);
     };
 
-}() );
+
+    // returns all words
+
+    exports.getWords = function()
+    {
+        return words;
+    };
+
+}());
