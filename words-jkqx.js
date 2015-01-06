@@ -4,6 +4,7 @@
 
     var _ = require('lodash');
     var w = require('./get-word');
+    var mail = require('./sendmail');
 
     // takes an array of functions and applies it to the single value
     // returns true if they are all true
@@ -57,5 +58,7 @@
     var word = w3jkqx[_.random(0, w3jkqx.length)];
 
     console.log(word);
+
+    mail.send('peter@codeindeed.com', 'peter@peterorum.com', 'Word of the day', word);
 
 }());
