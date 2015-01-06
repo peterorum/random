@@ -4,6 +4,8 @@
 
     var R = require('ramda');
     var w = require('./get-word');
+    var mail = require('./sendmail');
+
 
     // custom R functions
     var r = {};
@@ -48,5 +50,8 @@
     var word = w3valuable[r.random(w3valuable.length)];
 
     console.log(word);
+
+    mail.send('peter@codeindeed.com', 'peter@peterorum.com', 'Word of the day', word);
+
 
 }());
