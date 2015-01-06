@@ -6,7 +6,6 @@
     var w = require('./get-word');
     var mail = require('./sendmail');
 
-
     // custom R functions
     var r = {};
 
@@ -51,6 +50,6 @@
 
     console.log(word);
 
-    mail.send('peter@codeindeed.com', 'peter@peterorum.com', 'Word of the day: ' + word, word);
+    mail.send(process.env.mailFrom, process.env.mailTo, 'Word of the day: ' + word, word);
 
 }());
