@@ -6,40 +6,47 @@
 
     // create reusable transporter object using SMTP transport
 
-    var transporter = nodemailer.createTransport(
+    var transporter;
+
+    if (process.env.smtpUser)
     {
-        service: 'SendGrid',
-        port: 587,
-        auth:
+        transporter = nodemailer.createTransport(
         {
-            user: process.env.smtpUser,
-            pass: process.env.smtpPass
-        }
-    });
+            service: 'SendGrid',
+            port: 587,
+            auth:
+            {
+                user: process.env.smtpUser,
+                pass: process.env.smtpPass
+            }
+        });
+    }
 
     //--------- exports
 
     exports.send = function(from, to, subject, text, html)
     {
-        var mailOptions = {
-            from: from,
-            to: to,
-            subject: subject,
-            text: text,
-            html: html
-        };
-
-        transporter.sendMail(mailOptions, function(error, info)
+        if (transporter)
         {
-            if (error)
-            {
-                console.log(error);
-            }
-            else
-            {
-                console.log('Message sent: ' + info.response);
-            }
-        });
+            var mailOptions = {
+                from: from,
+                to: to,
+                subject: subject,
+                text: text,
+                html: html
+            };
 
+            transporter.sendMail(mailOptions, function(error, info)
+            {
+                if (error)
+                {
+                    console.log(error);
+                }
+                else
+                {
+                    console.log('Message sent: ' + info.response);
+                }
+            });
+        }
     };
 }());

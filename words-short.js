@@ -32,7 +32,7 @@
 
     var isLength3 = isLengthN(3);
 
-    // test for j,k, q & x
+    // test for j,k, q, x & z
     var hasValuableChar = R.anyPredicates([r.strContains('j'), r.strContains('k'), r.strContains('q'), r.strContains('x'), r.strContains('z')  ]);
 
     // want 3-letter words with a valuable character
