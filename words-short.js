@@ -35,8 +35,12 @@
     // test for j,k, q, x & z
     var hasValuableChar = R.anyPredicates([r.strContains('j'), r.strContains('k'), r.strContains('q'), r.strContains('x'), r.strContains('z')  ]);
 
-    // want 3-letter words with a valuable character
-    var pick = R.and(isLength3, hasValuableChar);
+    // also test for no vowel
+    var hasAVowel = R.anyPredicates([r.strContains('a'), r.strContains('e'), r.strContains('i'), r.strContains('o'), r.strContains('u')  ]);
+    var hasNoVowel = R.not(hasAVowel);
+
+    // want 3-letter words with a valuable character, or no vowel
+    var pick = R.and(isLength3, R.or(hasValuableChar, hasNoVowel));
 
     // get short valuable words
     var w3valuable = R.filter(pick, words);
