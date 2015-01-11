@@ -54,6 +54,6 @@
 
     console.log(word);
 
-    mail.send(process.env.mailFrom, process.env.mailTo, 'Word of the day: ' + word, word);
+    mail.send(process.env.mailFrom, process.env.mailTo, 'Wrd of the Day: ' + word, word);
 
 }());
