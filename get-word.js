@@ -6,7 +6,20 @@
 
     // https://scrabblehelper.googlecode.com/svn-history/r20/trunk/ScrabbleHelper/src/dictionaries/sowpods.txt
 
-    var dict = "./words.txt";
+    var dict = "words.txt";
+
+    // try this & 2 levels up
+
+    if (!fs.existsSync(dict))
+    {
+        dict = "../" + dict;
+
+        if (!fs.existsSync(dict))
+        {
+            dict = "../../" + dict;
+
+        }
+    }
 
     // dummy init
     var words = ['fish'];
