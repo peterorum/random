@@ -8,7 +8,7 @@
 
     var words = [];
 
-    var dict = "jzx-words.txt";
+    var dict = "jzx/jzx-words.txt";
 
     // load all words
     var readWords = function()
@@ -58,7 +58,6 @@
 
             // console.log(data);
         });
-
     };
 
     // pick one at random
