@@ -52,7 +52,6 @@
         return (words[r]);
     };
 
-
     // returns all words
 
     exports.getWords = function()
