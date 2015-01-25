@@ -90,16 +90,16 @@
             response.end('</html>\n');
         };
 
-        app.get('/config', function(request, response)
-        {
-            htmlHead(response);
+        // app.get('/config', function(request, response)
+        // {
+        //     htmlHead(response);
 
-            response.write('<pre>\n');
-            response.write(JSON.stringify(config.getConfig(), null, 4));
-            response.write('</pre>\n');
+        //     response.write('<pre>\n');
+        //     response.write(JSON.stringify(config.getConfig(), null, 4));
+        //     response.write('</pre>\n');
 
-            htmlEnd(response);
-        });
+        //     htmlEnd(response);
+        // });
 
 
         app.get('/', function(request, response)
