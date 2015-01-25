@@ -1,6 +1,4 @@
 (
-    // serve up dynamic content
-
     function()
     {
         // this code returns a web page with a word, ignoring the path
@@ -19,7 +17,6 @@
 
         var cis = require('./ci-string');
         var rword = require('./get-word.js');
-        var config = require('./process.js');
 
         http.createServer(app).listen(process.env.PORT || 8888);
 
@@ -89,6 +86,10 @@
             // end
             response.end('</html>\n');
         };
+
+        // don't push to production as it shows all config variables
+
+        // var config = require('./process.js');
 
         // app.get('/config', function(request, response)
         // {
