@@ -88,8 +88,6 @@
         {
             htmlHead(res);
 
-            var uri = url.parse(req.url, true, false);
-
             // start container
             res.write('<div class="container ng-cloak"  ng-controller="RandomController" >\n');
 
@@ -136,6 +134,7 @@
         // get random word via json
         app.get('/word', function(req, res)
         {
+            // format for readability
             // app.set('json spaces', 4);
 
             var word = rword.getWord();
