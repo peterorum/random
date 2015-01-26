@@ -1,8 +1,6 @@
 (
     function()
     {
-        // this code returns a web page with a word, ignoring the path
-
         "use strict";
 
         var express = require('express');
@@ -15,7 +13,6 @@
         var path = require('path');
         var fs = require('fs');
 
-        var cis = require('./ci-string');
         var rword = require('./get-word.js');
         var config = require('./process.js');
 
@@ -37,7 +34,7 @@
             res.setHeader("Content-Type", "text/html");
             res.writeHead(200);
 
-            res.write('<html>\n');
+            res.write('<html ng-app="randomApp">\n');
 
             // head
             res.write('<head>\n');
@@ -47,14 +44,12 @@
             res.write('</head>\n');
 
             // body
-            res.write('<body ng-app="randomApp" ng-hint>\n');
+            res.write('<body>\n');
         };
 
         var htmlEnd = function(res)
         {
             res.write('<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>\n');
-            // only hosted locally
-            res.write('<script src="node_modules/angular-hint/dist/hint.js"></script>\n');
 
             res.write('<script src="app/app.js"></script>\n');
             res.write('<script src="controllers/random.js"></script>\n');
@@ -95,9 +90,6 @@
 
             var uri = url.parse(req.url, true, false);
 
-            // can override word using ?word=fish
-            var word = uri.query.word || rword.getWord();
-
             // start container
             res.write('<div class="container ng-cloak"  ng-controller="RandomController" >\n');
 
@@ -115,12 +107,8 @@
             res.write('<div class="col-xs-12">\n');
 
             res.write('<h2 class="text-center">');
-            res.write('{{text}}');
-
-            // res.write(cis.template(
-            // {
-            //     word: word
-            // }, '<a href="http://www.thefreedictionary.com/{{ word }}" target="_blank">{{ word }}</a>'));
+            // output the word from angular scope
+            res.write('<a href="http://www.thefreedictionary.com/{{text}}" target="_blank">{{text}}</a>');
 
             res.write('</h2>\n');
 
@@ -131,7 +119,7 @@
             res.write('<div class="row">\n');
             res.write('<div class="col-xs-12 text-center">\n');
 
-            res.write('<div class="btn btn-primary" onclick="location.reload();">');
+            res.write('<div class="btn btn-primary" ng-click="getWord();">');
             res.write('again');
 
             res.write('</div>\n');
