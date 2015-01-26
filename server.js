@@ -17,143 +17,179 @@
 
         var cis = require('./ci-string');
         var rword = require('./get-word.js');
+        var config = require('./process.js');
 
         http.createServer(app).listen(process.env.PORT || 8888);
 
-        var handleError = function(response, errNo, err)
+        var handleError = function(res, errNo, err)
         {
-            response.writeHead(errNo,
+            res.writeHead(errNo,
             {
                 "Content-Type": "text/plain"
             });
-            response.write(errNo + " " + err + "\n");
-            response.end();
+            res.write(errNo + " " + err + "\n");
+            res.end();
             return;
         };
 
-        app.get(/\.js$/, function(request, response)
+        var htmlHead = function(res)
         {
-            var uri = url.parse(request.url, true, false);
-            var filename = path.join(process.cwd(), uri.pathname);
+            res.setHeader("Content-Type", "text/html");
+            res.writeHead(200);
 
-            // js
+            res.write('<html>\n');
+
+            // head
+            res.write('<head>\n');
+            res.write('<title>Random Inspiration</title>\n');
+            res.write('<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />\n');
+
+            res.write('</head>\n');
+
+            // body
+            res.write('<body ng-app="randomApp" ng-hint>\n');
+        };
+
+        var htmlEnd = function(res)
+        {
+            res.write('<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>\n');
+            // only hosted locally
+            res.write('<script src="node_modules/angular-hint/dist/hint.js"></script>\n');
+
+            res.write('<script src="app/app.js"></script>\n');
+            res.write('<script src="controllers/random.js"></script>\n');
+
+
+            res.write('</body>\n');
+
+            // end
+            res.end('</html>\n');
+        };
+
+        // javascript files
+        app.get(/\.js$/, function(req, res)
+        {
+            var uri = url.parse(req.url, true, false);
+            var filename = path.join(process.cwd(), uri.pathname);
 
             fs.readFile(filename, "binary", function(err, file)
             {
                 if (err)
                 {
-                    handleError(response, 404, "Not found " + err);
+                    handleError(res, 404, "Not found " + err);
                 }
                 else
                 {
-                    response.setHeader("Content-Type", "application/javascript");
-                    response.writeHead(200);
-                    response.write(file, "binary");
-                    response.end();
+                    res.setHeader("Content-Type", "application/javascript");
+                    res.writeHead(200);
+                    res.write(file, "binary");
+                    res.end();
                 }
             });
-
         });
 
-        var htmlHead = function(response)
+
+        app.get('/', function(req, res)
         {
-            response.setHeader("Content-Type", "text/html");
-            response.writeHead(200);
+            htmlHead(res);
 
-            response.write('<html>\n');
-
-            // head
-            response.write('<head>\n');
-            response.write('<title>Random Inspiration</title>\n');
-            response.write('<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />\n');
-            response.write('</head>\n');
-
-            // body
-            response.write('<body ng-app="randomApp" ng-hint>\n');
-        };
-
-        var htmlEnd = function(response)
-        {
-            response.write('<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>\n');
-
-            // only hosted locally
-            response.write('<script src="node_modules/angular-hint/dist/hint.js"></script>\n');
-
-            response.write('<script src="app/app.js"></script>\n');
-
-            response.write('</body>\n');
-
-            // end
-            response.end('</html>\n');
-        };
-
-        // don't push to production as it shows all config variables
-
-        // var config = require('./process.js');
-
-        // app.get('/config', function(request, response)
-        // {
-        //     htmlHead(response);
-
-        //     response.write('<pre>\n');
-        //     response.write(JSON.stringify(config.getConfig(), null, 4));
-        //     response.write('</pre>\n');
-
-        //     htmlEnd(response);
-        // });
-
-
-        app.get('/', function(request, response)
-        {
-            htmlHead(response);
-
-            var uri = url.parse(request.url, true, false);
+            var uri = url.parse(req.url, true, false);
 
             // can override word using ?word=fish
             var word = uri.query.word || rword.getWord();
 
             // start container
-            response.write('<div class="container">\n');
+            res.write('<div class="container ng-cloak"  ng-controller="RandomController" >\n');
 
             // heading
-            response.write('<div class="row">\n');
-            response.write('<div class="col-xs-12">\n');
+            res.write('<div class="row">\n');
+            res.write('<div class="col-xs-12">\n');
 
-            response.write('<h1 class="text-center">Random Inspiration</h1>');
+            res.write('<h1 class="text-center">Random Inspiration</h1>');
 
-            response.write('</div>\n');
-            response.write('</div>\n');
+            res.write('</div>\n');
+            res.write('</div>\n');
 
             // content
-            response.write('<div class="row">\n');
-            response.write('<div class="col-xs-12">\n');
+            res.write('<div class="row">\n');
+            res.write('<div class="col-xs-12">\n');
 
-            response.write('<h2 class="text-center">');
-            response.write(cis.template(
-            {
-                word: word
-            }, '<a href="http://www.thefreedictionary.com/{{ word }}" target="_blank">{{ word }}</a>'));
+            res.write('<h2 class="text-center">');
+            res.write('{{text}}');
 
-            response.write('</h2>\n');
+            // res.write(cis.template(
+            // {
+            //     word: word
+            // }, '<a href="http://www.thefreedictionary.com/{{ word }}" target="_blank">{{ word }}</a>'));
 
-            response.write('</div>\n');
-            response.write('</div>\n');
+            res.write('</h2>\n');
+
+            res.write('</div>\n');
+            res.write('</div>\n');
 
             // button
-            response.write('<div class="row">\n');
-            response.write('<div class="col-xs-12 text-center">\n');
+            res.write('<div class="row">\n');
+            res.write('<div class="col-xs-12 text-center">\n');
 
-            response.write('<div class="btn btn-primary" onclick="location.reload();">');
-            response.write('again');
+            res.write('<div class="btn btn-primary" onclick="location.reload();">');
+            res.write('again');
 
-            response.write('</div>\n');
+            res.write('</div>\n');
 
-            response.write('</div>\n');
-            response.write('</div>\n');
+            res.write('</div>\n');
+            res.write('</div>\n');
 
             // end container
-            response.write('</div>\n');
+            res.write('</div>\n');
 
-            htmlEnd(response);
+            htmlEnd(res);
         });
+
+        // get random word via json
+        app.get('/word', function(req, res)
+        {
+            // app.set('json spaces', 4);
+
+            var word = rword.getWord();
+
+            res.json(
+            {
+                'word': word
+            });
+
+        });
+
+        // test dump of available info
+        app.get('/test/:id', function(req, res)
+        {
+            console.log("URL:\t   " + req.originalUrl);
+            console.log("Protocol:  " + req.protocol);
+            console.log("IP:\t   " + req.ip);
+            console.log("Path:\t   " + req.path);
+            console.log("Host:\t   " + req.hostname);
+            console.log("Method:\t   " + req.method);
+            console.log("Query:\t   " + JSON.stringify(req.query));
+            console.log("Fresh:\t   " + req.fresh);
+            console.log("Stale:\t   " + req.stale);
+            console.log("Secure:\t   " + req.secure);
+            console.log("UTF8:\t   " + req.acceptsCharsets('utf8'));
+            console.log("Connection: " + req.get('connection'));
+            console.log("Headers: " + JSON.stringify(req.headers, null, 2));
+
+            res.send("Test request");
+
+            console.log('Response finished', res.finished);
+            console.log('Header sent', res.headerSent);
+
+        });
+
+
+        // test dump of available environment info
+        app.get('/config', function(req, res)
+        {
+            console.log(JSON.stringify(config.getConfig(), null, 4));
+            res.send("Config request");
+        });
+
+
     }());
