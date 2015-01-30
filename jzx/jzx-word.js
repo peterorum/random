@@ -2,7 +2,7 @@
 {
     "use strict";
 
-    var R = require('ramda');
+    var fp = require('lodash-fp');
     var fs = require('fs');
     var Twit = require('twit');
 
@@ -24,15 +24,6 @@
 
     // init loading of the words
     readWords();
-
-    // custom R functions
-    var r = {};
-
-    // create random function
-    r.random = function(n)
-    {
-        return Math.floor(Math.random() * n);
-    };
 
     var tweet = function(text)
     {
@@ -61,11 +52,11 @@
     };
 
     // pick one at random
-    var word = words[r.random(words.length)];
+    var word = words[fp.random(0, words.length - 1)];
 
     console.log(word);
 
-    tweet(word);
+    // tweet(word);
 
 }());
 

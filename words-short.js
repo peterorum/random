@@ -2,21 +2,21 @@
 {
     "use strict";
 
-    var _ = require('lodash-fp');
+    var fp = require('lodash-fp');
     var w = require('./get-word');
     var mail = require('./sendmail');
 
-    _.anyOf = _.curry(function(arr, w)
+    fp.anyOf = fp.curry(function(arr, w)
     {
-        return _.any(function(f)
+        return fp.any(function(f)
         {
             return f(w);
         }, arr);
     });
 
-    _.allOf = _.curry(function(arr, w)
+    fp.allOf = fp.curry(function(arr, w)
     {
-        return _.all(function(f)
+        return fp.all(function(f)
         {
             return f(w);
         }, arr);
@@ -28,7 +28,7 @@
     // var words = ['fish', 'cow', 'horse', 'dog', 'zoa', 'gju'];
 
     // make function to test if a word os a particular length
-    var isLengthN = _.curry(function(n, w)
+    var isLengthN = fp.curry(function(n, w)
     {
         return w.length === n;
     });
@@ -48,17 +48,17 @@
     };
 
     // want 3-letter words with a valuable character, or no vowel
-    var pick = _.allOf([isLength3, _.anyOf([hasValuableChar, hasNoVowely])]);
+    var pick = fp.allOf([isLength3, fp.anyOf([hasValuableChar, hasNoVowely])]);
 
     // get short valuable words
-    var w3valuable = _.filter(pick, words);
+    var w3valuable = fp.filter(pick, words);
 
     // dump all
     // console.log(w3valuable);
     // console.log(w3valuable.length);
 
     // pick one at random
-    var word = w3valuable[_.random(w3valuable.length - 1, 0 )];
+    var word = w3valuable[fp.random(0, w3valuable.length - 1)];
 
     console.log(word);
 
