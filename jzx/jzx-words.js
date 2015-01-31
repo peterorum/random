@@ -25,7 +25,7 @@
         return /[jkqxz]/i.test(w);
     };
 
-    // also test for no vowel
+    // also test for no vowel or y
     var hasNoVowely = function(w)
     {
         return !/[aeiouy]/i.test(w);
