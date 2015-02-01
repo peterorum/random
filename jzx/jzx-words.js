@@ -5,8 +5,7 @@
     var fp = require('lodash-fp');
     var w = require('../get-word');
 
-    var pfp = require('../plus-fp/plus-fp');
-    fp.mixin(pfp, fp);
+    fp.mixin(require('../plus-fp/plus-fp'));
 
     // load the words array
     var words = w.getWords();

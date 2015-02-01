@@ -56,7 +56,7 @@
 
     console.log(word);
 
-    // tweet(word);
+    tweet(word);
 
 }());
 

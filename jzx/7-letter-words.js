@@ -6,8 +6,7 @@
     var w = require('../get-word');
     var _s = require('underscore.string');
 
-    var pfp = require('../plus-fp/plus-fp');
-    fp.mixin(pfp, fp);
+    fp.mixin(require('../plus-fp/plus-fp'));
 
     // load the words array
     var words = w.getWords();
