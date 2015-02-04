@@ -84,7 +84,6 @@
             // node elementexplorer.js http://localhost:8888
             // press tab to see the options
             // eg element(by.id(''))
-
         });
     });
 })();
