@@ -4,8 +4,42 @@
 
     var math = require('mathjs');
     var Twit = require('twit');
+    var Q = require('q');
+    var R = require('ramda');
+    var request = require('request');
+    var parseString = require('xml2js').parseString;
 
     var words = require('./jzx-dict').words;
+
+    var getMeaning = function(word)
+    {
+        var deferred = Q.defer();
+
+        // / This function grabs the definition of a word in XML format.
+
+        // function grab_xml_definition ($word, $ref, $key)
+        //     {   $uri = "http://www.dictionaryapi.com/api/v1/references/" . urlencode($ref) . "/xml/" .
+        //                     urlencode($word) . "?key=" . urlencode($key);
+        //         return file_get_contents($uri);
+        //     };
+
+        // $xdef = grab_xml_definition("test", "collegiate", "9b40c328-3b86-46a7-9927-c27f8138276d");
+
+        var url = 'http://www.dictionaryapi.com/api/v1/references/collegiate/xml/' + word + '?key=9b40c328-3b86-46a7-9927-c27f8138276d';
+
+        request(url, function(error, response, xml)
+        {
+            if (!error && response.statusCode === 200)
+            {
+                parseString(xml, function(err, result)
+                {
+                    deferred.resolve(result);
+                });
+            }
+        });
+
+        return deferred.promise;
+    };
 
     var tweet = function(text)
     {
@@ -16,7 +50,7 @@
             consumer_secret: process.env.twitterConsumerSecret,
             access_token: process.env.twitterAccessToken,
             access_token_secret: process.env.twitterAccessTokenSecret
-            // jshint ignore:end
+                // jshint ignore:end
         });
 
         T.post('statuses/update',
@@ -38,7 +72,92 @@
 
     console.log(word);
 
-    tweet(word);
+    getMeaning(word).then(function(data)
+    {
+        // console.log('data', JSON.stringify(data, null, 4));
+
+        var entries = data.entry_list; //jshint ignore:line
+
+        var getDefinition = function(entry)
+        {
+            var def = [];
+
+            if (entry.def)
+            {
+                var dt = entry.def[0].dt;
+
+                def = R.map(function(d)
+                {
+                    // console.log(d, typeof d);
+
+                    var result = '';
+
+                    if (typeof d === "string")
+                    {
+                        result = d;
+                    }
+                    else if (d._)
+                    {
+                        if (d._ !== ':')
+                        {
+                            result += d._;
+                        }
+
+                        if (d.it)
+                        {
+                            result += ' ' + d.it[0];
+                        }
+                        else if (d.sx)
+                        {
+                            result += ' ' + d.sx[0];
+                        }
+                    }
+                    else if (d.un)
+                    {
+                        result = d.un[0];
+                    }
+
+                    return result.replace(/^:/, '');
+
+                }, dt);
+            }
+
+            return def;
+
+        };
+
+        var meaning = '';
+
+        if (entries.suggestion)
+        {
+            // meaning = 'Did you mean: ' + R.join(', ', entries.suggestion);
+        }
+        else
+        {
+            var meanings = R.map(getDefinition, entries.entry);
+
+            // remove blanks
+            meanings = R.filter(function(w)
+            {
+                return !!w.replace(/\s/g, '');
+            }, R.flatten(meanings));
+
+            // pick min length
+            var minlen = R.reduce(function(min, w)
+            {
+                return math.min(min, w.length);
+            }, 1e6, meanings);
+
+            meaning = R.find(function(w)
+            {
+                return w.length === minlen;
+            }, meanings);
+
+        }
+
+        console.log(meaning);
+        // tweet(word);
+    });
+
 
 }());
-
