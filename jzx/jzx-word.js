@@ -159,7 +159,7 @@
         console.log(msg);
 
         // twitter
-        // tweet(msg);
+        tweet(msg);
 
         // facebook
         // jshint camelcase:false
