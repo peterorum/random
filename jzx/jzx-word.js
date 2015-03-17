@@ -180,7 +180,7 @@
 
             // create message & serve up local file
             var post = {
-                message: msg + "\n\n#scrabble #lexulous #wordswithfriends"
+                message: msg
             };
 
             // post to page photos
