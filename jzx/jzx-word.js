@@ -4,6 +4,7 @@
 
     var math = require('mathjs');
     var Twit = require('twit');
+    var graph = require('fbgraph');
     var Q = require('q');
     var R = require('ramda');
     var request = require('request');
@@ -117,7 +118,7 @@
                         result = d.un[0];
                     }
 
-                    result =  R.trim(result.replace(/^:/, ''));
+                    result = R.trim(result.replace(/^:/, ''));
 
                     // console.log(result);
 
@@ -157,6 +158,37 @@
 
         console.log(msg);
 
-        tweet(msg);
+        // twitter
+        // tweet(msg);
+
+        // facebook
+        // jshint camelcase:false
+        graph.setAccessToken(process.env.fb_dj_access_token);
+
+        // get page accounts
+        graph.get("me/accounts", function(err, res)
+        {
+            // find relevant age to get access token for it
+            var dj = R.find(R.propEq('name', 'Daily Jzx'), res.data);
+
+            // console.log(dj);
+
+            // change access token to page's
+            graph.setAccessToken(dj.access_token);
+
+            //------------ post via url using local server
+
+            // create message & serve up local file
+            var post = {
+                message: msg + "\n\n#scrabble #lexulous #wordswithfriends"
+            };
+
+            // post to page photos
+            graph.post("/" + dj.id + "/feed", post, function(err, res)
+            {
+                console.log(res); // { id: xxxxx}
+            });
+        });
+
     });
 }());
