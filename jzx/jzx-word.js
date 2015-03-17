@@ -70,7 +70,7 @@
     // pick one at random
     var word = words[math.randomInt(0, words.length)];
 
-    console.log(word);
+    // word = 'elk';
 
     getMeaning(word).then(function(data)
     {
@@ -98,18 +98,18 @@
                     }
                     else if (d._)
                     {
-                        if (d._ !== ':')
+                        if (R.trim(d._) !== ':')
                         {
                             result += d._;
                         }
 
                         if (d.it)
                         {
-                            result += ' ' + d.it[0];
+                            result += ' ' + R.trim(d.it[0]);
                         }
                         else if (d.sx)
                         {
-                            result += ' ' + d.sx[0];
+                            result = d.sx[0]._ || d.sx[0];
                         }
                     }
                     else if (d.un)
@@ -117,8 +117,11 @@
                         result = d.un[0];
                     }
 
-                    return result.replace(/^:/, '');
+                    result =  R.trim(result.replace(/^:/, ''));
 
+                    // console.log(result);
+
+                    return result;
                 }, dt);
             }
 
@@ -136,28 +139,24 @@
         {
             var meanings = R.map(getDefinition, entries.entry);
 
-            // remove blanks
+            // remove blanks & too long to tweet
             meanings = R.filter(function(w)
             {
-                return !!w.replace(/\s/g, '');
+                return !!R.trim(w) && w.length <= 130;
             }, R.flatten(meanings));
 
-            // pick min length
-            var minlen = R.reduce(function(min, w)
-            {
-                return math.min(min, w.length);
-            }, 1e6, meanings);
-
-            meaning = R.find(function(w)
-            {
-                return w.length === minlen;
-            }, meanings);
-
+            meaning = meanings[math.randomInt(meanings.length)];
         }
 
-        console.log(meaning);
-        // tweet(word);
+        var msg = word;
+
+        if (meaning)
+        {
+            msg = msg + ': ' + meaning;
+        }
+
+        console.log(msg);
+
+        tweet(msg);
     });
-
-
 }());
