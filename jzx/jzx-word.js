@@ -118,7 +118,8 @@
                         result = d.un[0];
                     }
 
-                    result = R.trim(result.replace(/^:/, ''));
+                    // remove leading color or ()
+                    result = R.trim(result.replace(/(^:)|(\(\))/g, ''));
 
                     // console.log(result);
 
