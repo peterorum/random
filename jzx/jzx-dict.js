@@ -158,7 +158,6 @@
         'rok',
         'sax',
         'saz',
-        'sex',
         'sez',
         'shh',
         'sik',
@@ -171,7 +170,6 @@
         'suq',
         'taj',
         'tak',
-        'tax',
         'tex',
         'tix',
         'tsk',
@@ -209,7 +207,6 @@
         'ziz',
         'zoa',
         'zol',
-        'zoo',
         'zos',
         'zuz',
         'zzz'
