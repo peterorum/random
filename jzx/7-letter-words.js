@@ -2,6 +2,9 @@
 {
     "use strict";
 
+
+    // result: relations
+
     var fp = require('lodash-fp');
     var w = require('../get-word');
     var _s = require('underscore.string');

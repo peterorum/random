@@ -54,4 +54,7 @@
     // redirect to a text file or subl & copy into jzx-dict.js
     console.log(w3valuable);
     // console.log(w3valuable.length);
+
+    // todo q words without u
+
 }());

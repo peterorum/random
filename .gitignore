@@ -32,3 +32,5 @@ build/Release
 *.sublime-*
 
 common-words.txt
+
+plus-fp/
