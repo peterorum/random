@@ -47,10 +47,10 @@
         var T = new Twit(
         {
             // jshint ignore:start
-            consumer_key: process.env.twitterConsumerKey,
-            consumer_secret: process.env.twitterConsumerSecret,
-            access_token: process.env.twitterAccessToken,
-            access_token_secret: process.env.twitterAccessTokenSecret
+            consumer_key: process.env.tw_jzx_consumer_key,
+            consumer_secret: process.env.tw_jzx_consumer_secret,
+            access_token: process.env.tw_jzx_oauth_token,
+            access_token_secret: process.env.tw_jzx_oauth_token_secret
                 // jshint ignore:end
         });
 
