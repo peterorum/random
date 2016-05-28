@@ -299,6 +299,16 @@
     'wich',
     'wych',
     'yech',
-    'yuch'
+    'yuch',
+    'brrr',
+    'ch',
+    'cwms',
+    'hm',
+    'mm',
+    'pfft',
+    'psst',
+    'sh',
+    'st',
+    'tsks'
   ];
 })();
