@@ -70,13 +70,20 @@
         return /^y[^aeiou]/.test(w)  && ! /s$/.test(w);
     };
 
+    // begins with ch
+    var hasCh = function(w)
+    {
+        return /ch/.test(w) && ! /s$/.test(w);
+    };
+
     // want 3-letter words with a valuable character, or no vowel
     var pick1 = R.allPass([isLength3, R.anyPass([hasValuableChar, hasNoVowely])]);
     var pick2 = R.allPass([isAtLeastLength3, hasNoConsonant]);
     var pick3 = R.allPass([hasQNoU]);
     var pick4 = R.allPass([isAtMostLength4, has2Us]);
     var pick5 = R.allPass([isAtMostLength5, hasYconsonant]);
-    var pick = R.anyPass([/*pick1, pick2,*/ pick3, pick4, pick5]);
+    var pick6 = R.allPass([isAtMostLength4, hasCh]);
+    var pick = R.anyPass([/*pick1, pick2, pick3, pick4, pick5 */ pick6]);
 
     // get short valuable words
     var w3valuable = R.filter(pick, words);
