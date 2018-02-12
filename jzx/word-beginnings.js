@@ -1,0 +1,49 @@
+const worder = require('../get-word')
+const _ = require('lodash')
+
+// load the words array
+const words = worder.getWords()
+
+for (let len = 3; len <= 6; len += 1) {
+  const freqs = {}
+
+  words.forEach(word => {
+    const start = word.substr(0, len)
+
+    if (start in freqs) {
+      freqs[start] += 1
+    } else {
+      freqs[start] = 1
+    }
+  })
+
+  const best = _.sortBy(Object.keys(freqs), w => freqs[w]).slice(-10)
+
+  best.forEach(b => console.log(b, freqs[b]))
+}
+
+/*
+
+non 1536
+sub 1575
+out 1715
+int 1719
+mis 1725
+pro 2183
+pre 2429
+con 2711
+dis 2795
+
+mono 546
+cont 562
+comp 605
+para 659
+anti 892
+over 2234
+
+trans 543
+under 744
+super 839
+inter 1108
+
+ */
