@@ -1,7 +1,8 @@
 (function() {
   "use strict";
 
-  exports.words = [ 'adz',
+  exports.words = [
+    'adz',
     'aia',
     'aka',
     'ake',
@@ -59,7 +60,6 @@
     'kae',
     'kaf',
     'kai',
-    'kak',
     'kam',
     'kas',
     'kat',
@@ -165,7 +165,6 @@
     'zol',
     'zos',
     'zuz',
-    'zzz',
     'bubu',
     'faqir',
     'fugu',
@@ -174,7 +173,6 @@
     'juju',
     'juku',
     'kudu',
-    'kuku',
     'kuru',
     'kutu',
     'kuzu',
@@ -203,7 +201,6 @@
     'susu',
     'talaq',
     'tranq',
-    'tsaddiq',
     'tutu',
     'tzaddiq',
     'ulu',
