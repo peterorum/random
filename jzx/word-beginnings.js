@@ -4,16 +4,20 @@ const _ = require('lodash')
 // load the words array
 const words = worder.getWords()
 
-for (let len = 3; len <= 6; len += 1) {
+for (let len = 3; len <= 5; len += 1) {
   const freqs = {}
 
   words.forEach(word => {
-    const start = word.substr(0, len)
+    // start
+    const part = word.substr(0, len)
 
-    if (start in freqs) {
-      freqs[start] += 1
+    // end
+    // const part = word.substr(-len)
+
+    if (part in freqs) {
+      freqs[part] += 1
     } else {
-      freqs[start] = 1
+      freqs[part] = 1
     }
   })
 
