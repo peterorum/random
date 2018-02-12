@@ -34,3 +34,5 @@ build/Release
 common-words.txt
 
 plus-fp/
+
+.tern-port
