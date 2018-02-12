@@ -2,7 +2,7 @@ const worder = require('../get-word')
 const _ = require('lodash')
 
 // load the words array
-const words = worder.getWords()
+const words = worder.getWords().filter(w => w.length === 7 || w.length === 8)
 
 for (let len = 3; len <= 5; len += 1) {
   const freqs = {}
