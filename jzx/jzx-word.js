@@ -24,9 +24,9 @@
         //         return file_get_contents($uri);
         //     };
 
-        // $xdef = grab_xml_definition("test", "collegiate", "9b40c328-3b86-46a7-9927-c27f8138276d");
+        // $xdef = grab_xml_definition("test", "collegiate", "abcdefapikey");
 
-        var url = 'http://www.dictionaryapi.com/api/v1/references/collegiate/xml/' + word + '?key=9b40c328-3b86-46a7-9927-c27f8138276d';
+        var url = 'http://www.dictionaryapi.com/api/v1/references/collegiate/xml/' + word + '?key=' + process.env.dictionary_api_key;
 
         request(url, function(error, response, xml)
         {
